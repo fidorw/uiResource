@@ -1,10 +1,10 @@
 module.exports = {
-	entry: './js/uiConfig.js',
+	entry: './js/uiResource.js',
 	output: {
 		path: __dirname + '/dist',
-		filename: 'uiConfig.js',
+		filename: 'uiResource.js',
 		libraryTarget: 'var',
-		library: 'uiConfig',
+		library: 'uiResource',
 		libraryExport: 'default'
 	}
 }
