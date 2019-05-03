@@ -1,10 +1,13 @@
 import {getValue} from './validateKey'
+import vk from './validateKey'
 
 var isDev = false
 
 export const initEnvIsDev = envIsDev => (isDev = envIsDev)
+export const envIsDev = () => isDev
 export {initDefaults} from './validateKey'
 export {initAutoupdateDefaults} from './autoupdateDefaults'
+export const validateKey = vk
 
 export default (R, key, def) => {
 	if (isDev) {
