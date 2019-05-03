@@ -15,11 +15,13 @@ Object.defineProperty(exports, "initAutoupdateDefaults", {
     return _autoupdateDefaults.initAutoupdateDefaults;
   }
 });
-exports.default = exports.initEnvIsDev = void 0;
+exports.default = exports.validateKey = exports.envIsDev = exports.initEnvIsDev = void 0;
 
-var _validateKey = require("./validateKey");
+var _validateKey = _interopRequireWildcard(require("./validateKey"));
 
 var _autoupdateDefaults = require("./autoupdateDefaults");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -30,6 +32,14 @@ var initEnvIsDev = function initEnvIsDev(envIsDev) {
 };
 
 exports.initEnvIsDev = initEnvIsDev;
+
+var envIsDev = function envIsDev() {
+  return isDev;
+};
+
+exports.envIsDev = envIsDev;
+var validateKey = _validateKey.default;
+exports.validateKey = validateKey;
 
 var _default = function _default(R, key, def) {
   if (isDev) {
