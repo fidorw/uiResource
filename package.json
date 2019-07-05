@@ -15,27 +15,27 @@
   "license": "MIT",
   "dependencies": {
     "deep-equal": "^1.0.1",
-    "pubcore-http": "^1.0.5"
+    "pubcore-http": "^1.0.7"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
-    "@babel/register": "^7.0.0",
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.0",
+    "@babel/preset-env": "^7.5.0",
+    "@babel/register": "^7.4.4",
     "chai": "^4.1.2",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.1.0",
     "fakexmlhttprequest": "0.0.1",
     "mocha": "^5.1.1",
     "nyc": "^13.3.0",
-    "webpack": "^4.8.2",
-    "webpack-cli": "^2.1.3"
+    "webpack": "^4.35.2",
+    "webpack-cli": "^3.3.5"
   },
   "babel": {
     "presets": [
