@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import uiResource, {initEnvIsDev,envIsDev,initDefaults,initAutoupdateDefaults,validateKey} from './uiResource'
+import uiResource, {initEnvIsDev,envIsDev,initDefaults,initAutoupdateDefaults} from './uiResource'
 
 describe('uiResource, ' + new Date(), () => {
 	it('get valid configuration object {a:1}', () => {
