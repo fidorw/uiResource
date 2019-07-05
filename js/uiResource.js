@@ -15,13 +15,13 @@ Object.defineProperty(exports, "initAutoupdateDefaults", {
     return _autoupdateDefaults.initAutoupdateDefaults;
   }
 });
-exports.default = exports.validateKey = exports.envIsDev = exports.initEnvIsDev = void 0;
+exports["default"] = exports.validateKey = exports.envIsDev = exports.initEnvIsDev = void 0;
 
 var _validateKey = _interopRequireWildcard(require("./validateKey"));
 
 var _autoupdateDefaults = require("./autoupdateDefaults");
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -38,7 +38,7 @@ var envIsDev = function envIsDev() {
 };
 
 exports.envIsDev = envIsDev;
-var validateKey = _validateKey.default;
+var validateKey = _validateKey["default"];
 exports.validateKey = validateKey;
 
 var _default = function _default(R, key, def) {
@@ -47,12 +47,15 @@ var _default = function _default(R, key, def) {
     if (typeof key !== 'string') throw 'ERROR_KEY_IS_NOT_A_STRING';
   }
 
-  return (0, _validateKey.getValue)({
+  var vko = (0, _validateKey["default"])({
     R: R,
     key: key,
     def: def,
     isDev: isDev
   });
+  var value = vko.value;
+  isDev && typeof vko.value === 'undefined' && (value = vko.def);
+  return value;
 };
 
-exports.default = _default;
+exports["default"] = _default;
