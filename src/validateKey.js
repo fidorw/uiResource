@@ -1,5 +1,4 @@
 import equal from 'deep-equal'
-import validateKey from './validateKey'
 import autoupdateDefaults from './autoupdateDefaults'
 
 var config = {
@@ -8,11 +7,6 @@ var config = {
 }
 
 export const initDefaults = (defaults) => config.defaults = defaults
-
-export const getValue = ({R, key, def, isDev}) => {
-	var vckd = validateKey({R, key, def, isDev})
-	return vckd.value
-}
 
 export default ({R, key, def, isDev}) => {
 	if (typeof R !== 'object') R = {}

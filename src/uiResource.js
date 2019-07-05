@@ -1,4 +1,3 @@
-import {getValue} from './validateKey'
 import vk from './validateKey'
 
 var isDev = false
@@ -14,5 +13,8 @@ export default (R, key, def) => {
 		if (typeof R !== 'object') throw 'ERROR_R_IS_NOT_AN_OBJECT'
 		if (typeof key !== 'string') throw 'ERROR_KEY_IS_NOT_A_STRING'
 	}
-	return getValue({R, key, def, isDev})
+	var vko = vk({R, key, def, isDev})
+	var value = vko.value
+	isDev && typeof vko.value === 'undefined' && (value = vko.def)
+	return value
 }
