@@ -36,4 +36,19 @@ describe('autoupdateDefaults, ' + new Date(), () => {
 		autoupdateDefaults('unittest',{unittest:'unittest'})
 		expect(requests.length).to.equal(0)
 	})
+
+	it('test context switch', () => {
+		initAutoupdateDefaults({
+			postUri:'/core/service/defaults.php?resource=unittest1&component=unittest1'
+		})
+		initAutoupdateDefaults(
+			{postUri:'/core/service/defaults.php?resource=unittest2&component=unittest2'},
+			'ctx2'
+		)
+		autoupdateDefaults('unittest1',{unittest1:'unittest1'})
+		expect(requests[0].requestBody).to.equal('{"unittest1":{"unittest1":"unittest1"}}')
+		autoupdateDefaults('unittest2',{unittest2:'unittest2'},'ctx2')
+		expect(requests[1].requestBody).to.equal('{"unittest2":{"unittest2":"unittest2"}}')
+	})
+
 })

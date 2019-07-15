@@ -42,4 +42,12 @@ describe('validateKey, ' + new Date(), () => {
 		initDefaults({})
 		expect(validateKey({R:{},key:{'object':'is not allowed'}})).to.deep.equal({value:undefined,R:{},key:'',def:undefined})
 	})
+	it('two diffrent resources context switch' , () => {
+		initDefaults({'a':1})
+		initDefaults({'b':2},'ctx2')
+		expect(validateKey({R:{},key:'a'})).to.deep.equal({value:undefined,R:{},key:'a',def:1})
+		expect(validateKey({R:{},key:'b'})).to.deep.equal({value:undefined,R:{},key:'b',def:undefined})
+		expect(validateKey({R:{},key:'b',ctx:'ctx2'})).to.deep.equal({value:undefined,R:{},key:'b',def:2})
+		expect(validateKey({R:{},key:'a'})).to.deep.equal({value:undefined,R:{},key:'a',def:1})
+	})
 })

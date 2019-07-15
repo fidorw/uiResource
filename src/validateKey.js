@@ -2,33 +2,39 @@ import equal from 'deep-equal'
 import autoupdateDefaults from './autoupdateDefaults'
 
 var config = {
-	autoupdateUri: '',
-	defaults: undefined
+	ctx: undefined,
+	defaults: {}
 }
 
-export const initDefaults = (defaults) => config.defaults = defaults
+export const initDefaults = (defaults,ctx) => {
+	typeof ctx === 'undefined' && (ctx = 'defctx')
+	config.ctx = ctx
+	config.defaults[ctx] = defaults
+}
 
-export default ({R, key, def, isDev}) => {
+export default ({R, key, def, isDev, ctx}) => {
+	typeof ctx === 'undefined' && (ctx = 'defctx')
 	if (typeof R !== 'object') R = {}
 	if (typeof key === 'number') key = key.toString()
 	if (typeof key !== 'string') key = ''
 
 	var value = R[key]
 
-	if (typeof config.defaults !== 'object') {
+	var d = config.defaults[ctx]
+	if (typeof d === 'undefined') {
 		return {value, R, key, def}
 	}
 
-	if (key && typeof config.defaults[key] === 'undefined') {
-		if (typeof def !== 'undefined') config.defaults[key] = def
-		else if (typeof R[key] !== 'undefined') config.defaults[key] = R[key]
-		isDev && typeof config.defaults[key] !== 'undefined' && autoupdateDefaults(key,config.defaults[key])
+	if (key && typeof d[key] === 'undefined') {
+		if (typeof def !== 'undefined') d[key] = def
+		else if (typeof R[key] !== 'undefined') d[key] = R[key]
+		isDev && typeof d[key] !== 'undefined' && autoupdateDefaults(key,d[key],ctx)
 	}
 
 	if (isDev) {
-		if (typeof config.defaults[key] === 'undefined') throw 'ERROR_NO_DEFAULT_DEFINED for '+key
-		if (typeof def !== 'undefined' && ! equal(config.defaults[key],def)) throw 'ERROR_DEFAULT_CONFLICT in '+key
+		if (typeof d[key] === 'undefined') throw 'ERROR_NO_DEFAULT_DEFINED for '+key
+		if (typeof def !== 'undefined' && ! equal(d[key],def)) throw 'ERROR_DEFAULT_CONFLICT in '+key
 	}
 
-	return {value, R, key, def:config.defaults[key]}
+	return {value, R, key, def:d[key]}
 }
