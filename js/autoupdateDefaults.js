@@ -9,31 +9,35 @@ var _pubcoreHttp = _interopRequireDefault(require("pubcore-http"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { if (i % 2) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } else { Object.defineProperties(target, Object.getOwnPropertyDescriptors(arguments[i])); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var newDefaults = {},
-    config = {
-  postUri: ''
+var config = {
+  newDefaults: {},
+  postUri: undefined
 };
 
-var postDefaults = function postDefaults() {
-  return (0, _pubcoreHttp["default"])(config.postUri, newDefaults).then(function () {
-    return newDefaults = {};
+var postDefaults = function postDefaults(ctx) {
+  return (0, _pubcoreHttp["default"])(config[ctx].postUri, config[ctx].newDefaults).then(function () {
+    return config[ctx].newDefaults = {};
   });
 };
 
-var initAutoupdateDefaults = function initAutoupdateDefaults(c) {
-  config = _objectSpread({}, config, {}, c);
+var initAutoupdateDefaults = function initAutoupdateDefaults(c, ctx) {
+  typeof ctx === 'undefined' && (ctx = 'defctx');
+  config[ctx] = {
+    newDefaults: {},
+    postUri: c.postUri
+  };
 };
 
 exports.initAutoupdateDefaults = initAutoupdateDefaults;
 
-var _default = function _default(key, spec) {
-  if (typeof config.postUri === 'string' && config.postUri.length > 0) {
-    newDefaults[key] = spec;
-    postDefaults();
+var _default = function _default(key, spec, ctx) {
+  typeof ctx === 'undefined' && (ctx = 'defctx');
+  var postUri = config[ctx].postUri;
+
+  if (typeof postUri === 'string' && postUri.length > 0) {
+    typeof config[ctx].newDefaults === 'undefined' && (config[ctx].newDefaults = {});
+    config[ctx].newDefaults[key] = spec;
+    postDefaults(ctx);
   }
 };
 

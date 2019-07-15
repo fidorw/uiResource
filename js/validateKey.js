@@ -14,12 +14,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var config = {
-  autoupdateUri: '',
-  defaults: undefined
+  ctx: undefined,
+  defaults: {}
 };
 
-var initDefaults = function initDefaults(defaults) {
-  return config.defaults = defaults;
+var initDefaults = function initDefaults(defaults, ctx) {
+  typeof ctx === 'undefined' && (ctx = 'defctx');
+  config.ctx = ctx;
+  config.defaults[ctx] = defaults;
 };
 
 exports.initDefaults = initDefaults;
@@ -28,13 +30,16 @@ var _default = function _default(_ref) {
   var R = _ref.R,
       key = _ref.key,
       def = _ref.def,
-      isDev = _ref.isDev;
+      isDev = _ref.isDev,
+      ctx = _ref.ctx;
+  typeof ctx === 'undefined' && (ctx = 'defctx');
   if (_typeof(R) !== 'object') R = {};
   if (typeof key === 'number') key = key.toString();
   if (typeof key !== 'string') key = '';
   var value = R[key];
+  var d = config.defaults[ctx];
 
-  if (_typeof(config.defaults) !== 'object') {
+  if (typeof d === 'undefined') {
     return {
       value: value,
       R: R,
@@ -43,21 +48,21 @@ var _default = function _default(_ref) {
     };
   }
 
-  if (key && typeof config.defaults[key] === 'undefined') {
-    if (typeof def !== 'undefined') config.defaults[key] = def;else if (typeof R[key] !== 'undefined') config.defaults[key] = R[key];
-    isDev && typeof config.defaults[key] !== 'undefined' && (0, _autoupdateDefaults["default"])(key, config.defaults[key]);
+  if (key && typeof d[key] === 'undefined') {
+    if (typeof def !== 'undefined') d[key] = def;else if (typeof R[key] !== 'undefined') d[key] = R[key];
+    isDev && typeof d[key] !== 'undefined' && (0, _autoupdateDefaults["default"])(key, d[key], ctx);
   }
 
   if (isDev) {
-    if (typeof config.defaults[key] === 'undefined') throw 'ERROR_NO_DEFAULT_DEFINED for ' + key;
-    if (typeof def !== 'undefined' && !(0, _deepEqual["default"])(config.defaults[key], def)) throw 'ERROR_DEFAULT_CONFLICT in ' + key;
+    if (typeof d[key] === 'undefined') throw 'ERROR_NO_DEFAULT_DEFINED for ' + key;
+    if (typeof def !== 'undefined' && !(0, _deepEqual["default"])(d[key], def)) throw 'ERROR_DEFAULT_CONFLICT in ' + key;
   }
 
   return {
     value: value,
     R: R,
     key: key,
-    def: config.defaults[key]
+    def: d[key]
   };
 };
 
