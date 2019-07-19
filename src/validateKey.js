@@ -12,7 +12,7 @@ export const initDefaults = (defaults,ctx) => {
 	config.defaults[ctx] = defaults
 }
 
-export default ({R, key, def, isDev, ctx}) => {
+export default ({R, key, def, isDev, ctx, autoupdateOff}) => {
 	typeof ctx === 'undefined' && (ctx = 'defctx')
 	if (typeof R !== 'object') R = {}
 	if (typeof key === 'number') key = key.toString()
@@ -28,7 +28,7 @@ export default ({R, key, def, isDev, ctx}) => {
 	if (key && typeof d[key] === 'undefined') {
 		if (typeof def !== 'undefined') d[key] = def
 		else if (typeof R[key] !== 'undefined') d[key] = R[key]
-		isDev && typeof d[key] !== 'undefined' && autoupdateDefaults(key,d[key],ctx)
+		isDev && typeof d[key] !== 'undefined' && ! autoupdateOff && autoupdateDefaults(key,d[key],ctx)
 	}
 
 	if (isDev) {

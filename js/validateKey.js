@@ -31,7 +31,8 @@ var _default = function _default(_ref) {
       key = _ref.key,
       def = _ref.def,
       isDev = _ref.isDev,
-      ctx = _ref.ctx;
+      ctx = _ref.ctx,
+      autoupdateOff = _ref.autoupdateOff;
   typeof ctx === 'undefined' && (ctx = 'defctx');
   if (_typeof(R) !== 'object') R = {};
   if (typeof key === 'number') key = key.toString();
@@ -50,7 +51,7 @@ var _default = function _default(_ref) {
 
   if (key && typeof d[key] === 'undefined') {
     if (typeof def !== 'undefined') d[key] = def;else if (typeof R[key] !== 'undefined') d[key] = R[key];
-    isDev && typeof d[key] !== 'undefined' && (0, _autoupdateDefaults["default"])(key, d[key], ctx);
+    isDev && typeof d[key] !== 'undefined' && !autoupdateOff && (0, _autoupdateDefaults["default"])(key, d[key], ctx);
   }
 
   if (isDev) {
